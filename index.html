@@ -186,6 +186,25 @@ function detailedSolution(q){
     <p>Suy ra:</p>
     <p>\\[|A\\cap B|=24+15-36=3\\]</p>
     <p><b>Kết luận:</b> Có <b>3 người</b> thích cả tập thể thao và đi câu cá.</p>`;
+  if(q.id==='D1-TN-10') return `
+    <p><b>Bước 1 · Tìm phương trình đường biên</b></p>
+    <p>Quan sát hình, đường thẳng cắt trục \\(Oy\\) tại \\(150\\) và cắt trục \\(Ox\\) tại \\(100\\).</p>
+    <p>Đường thẳng qua \\((0;150)\\) và \\((100;0)\\) có phương trình:</p>
+    <p>\\[3x+2y=300\\]</p>
+
+    <p><b>Bước 2 · Xét dấu bằng</b></p>
+    <p>Đề nói <b>“kể cả đường thẳng”</b>, nên đáp án phải dùng \\(\\le\\) hoặc \\(\\ge\\), không thể dùng \\(<\\) hoặc \\(>\\).</p>
+
+    <p><b>Bước 3 · Chọn điểm thử</b></p>
+    <p>Phần không tô đậm chứa gốc tọa độ \\(O(0;0)\\). Thay O vào biểu thức:</p>
+    <p>\\[3\\cdot0+2\\cdot0=0\\]</p>
+    <p>Ta có:</p>
+    <p>\\[0\\le300\\]</p>
+    <p>đúng. Vì vậy phía chứa O ứng với:</p>
+    <p>\\[3x+2y\\le300\\]</p>
+
+    <p><b>Kết luận:</b> Chọn \\(\\boxed{3x+2y\\le300}\\).</p>`;
+
   if(q.id==='D1-TL-3') return `
     <p><b>Bước 1 · Vẽ đường biên</b></p>
     <p>Thay dấu \\( < \\) bằng dấu \\(=\\), ta được đường thẳng:</p>
@@ -626,7 +645,43 @@ function home(){
   document.querySelectorAll('[data-theory]').forEach(b=>b.onclick=()=>openTheoryGroup(b.dataset.theory));
 }
 function start(id,mode){stop();state={view:'exam',exam:id,mode,answers:{},essay:{},submitted:false,sec:0,timer:null};setnav('');render();state.timer=setInterval(()=>{state.sec++;const e=by('timer');if(e)e.textContent=fmt(state.sec)},1000)}function fmt(s){return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`}function stop(){if(state.timer)clearInterval(state.timer);state.timer=null}
-function diagram(id){if(!id)return'';if(id==='d3q6')return `<div class="diagram"><svg viewBox="0 0 520 300"><ellipse cx="260" cy="150" rx="185" ry="115" fill="#bfe7f2" stroke="#176b87" stroke-width="4"/><ellipse cx="285" cy="160" rx="82" ry="67" fill="#fff" stroke="#344054" stroke-width="4"/><text x="155" y="120" font-size="34">S</text><text x="270" y="170" font-size="34">T</text></svg></div>`;return `<div class="diagram"><svg viewBox="0 0 520 300"><line x1="45" y1="250" x2="490" y2="250" stroke="#222" stroke-width="3"/><line x1="110" y1="280" x2="110" y2="30" stroke="#222" stroke-width="3"/><line x1="100" y1="70" x2="430" y2="250" stroke="#176b87" stroke-width="4"/><text x="285" y="65" fill="#176b87" font-size="18">Đường biên và miền nghiệm</text></svg></div>`}
+function diagram(id){
+  if(!id)return'';
+  if(id==='d1q10') return `<div class="diagram">
+    <svg viewBox="0 0 700 430" aria-label="Đường thẳng 3x cộng 2y bằng 300 và miền nghiệm">
+      <defs>
+        <pattern id="shadeD1" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#d1d5db" stroke-width="4"/>
+        </pattern>
+      </defs>
+      <rect width="700" height="430" fill="#fff"/>
+      <!-- vùng bị loại: phía trên/phải đường thẳng -->
+      <polygon points="160,70 650,70 650,350 500,350" fill="url(#shadeD1)"/>
+      <!-- trục -->
+      <line x1="90" y1="350" x2="650" y2="350" stroke="#222" stroke-width="3"/>
+      <line x1="160" y1="390" x2="160" y2="45" stroke="#222" stroke-width="3"/>
+      <!-- đường biên qua (0,150) và (100,0) -->
+      <line x1="160" y1="100" x2="500" y2="350" stroke="#f58220" stroke-width="4"/>
+      <!-- điểm -->
+      <circle cx="160" cy="100" r="6" fill="#f58220"/>
+      <circle cx="500" cy="350" r="6" fill="#f58220"/>
+      <circle cx="160" cy="350" r="6" fill="#1d91a8"/>
+      <g font-family="Arial,sans-serif" font-size="17" fill="#222">
+        <text x="170" y="340">O(0;0)</text>
+        <text x="88" y="96">150</text>
+        <text x="487" y="377">100</text>
+        <text x="615" y="375">x</text>
+        <text x="175" y="60">y</text>
+        <text x="340" y="132" fill="#c85e00" font-weight="700">3x + 2y = 300</text>
+        <text x="210" y="300" fill="#0e7185" font-weight="700">Phần không tô đậm</text>
+        <text x="470" y="170" fill="#666">Phần tô đậm</text>
+      </g>
+    </svg>
+    <div style="font-size:14px;color:#667085;margin-top:8px">
+      Đường thẳng đi qua (0;150) và (100;0). Phần không tô đậm chứa O(0;0).
+    </div>
+  </div>`;
+  if(id==='d3q6')return `<div class="diagram"><svg viewBox="0 0 520 300"><ellipse cx="260" cy="150" rx="185" ry="115" fill="#bfe7f2" stroke="#176b87" stroke-width="4"/><ellipse cx="285" cy="160" rx="82" ry="67" fill="#fff" stroke="#344054" stroke-width="4"/><text x="155" y="120" font-size="34">S</text><text x="270" y="170" font-size="34">T</text></svg></div>`;return `<div class="diagram"><svg viewBox="0 0 520 300"><line x1="45" y1="250" x2="490" y2="250" stroke="#222" stroke-width="3"/><line x1="110" y1="280" x2="110" y2="30" stroke="#222" stroke-width="3"/><line x1="100" y1="70" x2="430" y2="250" stroke="#176b87" stroke-width="4"/><text x="285" y="65" fill="#176b87" font-size="18">Đường biên và miền nghiệm</text></svg></div>`}
 function note(q){const t=tmap()[q.type_id];const sourceText=q.id==='D1-TL-4'?'':q.source_issue;return `<details open><summary>${t.type_id} · ${t.title}</summary><div class="detail"><h4>Kiến thức cần nhớ</h4><div>${mathSafe(t.core)}</div><h4>Cách giải</h4><ol>${t.steps.map(x=>`<li>${x}</li>`).join('')}</ol><h4>Lỗi dễ sai</h4><ul>${t.pitfalls.map(x=>`<li>${x}</li>`).join('')}</ul><h4>Lời giải câu này</h4><div>${detailedSolution(q)}</div>${sourceText?`<p><b>Ghi chú:</b> ${sourceText}</p>`:''}</div></details>`}
 function qhtml(q){const sel=state.answers[q.id],show=state.submitted||(state.mode==='practice'&&state['c_'+q.id]);return `<article class="q" id="${q.id}"><div class="qtop"><b>Câu ${q.number}</b><span class="tag">${q.type_id}</span></div><div class="prompt">${mathSafe(q.prompt)}</div>${diagram(q.diagram)}<div class="opts">${q.options.map(o=>`<label class="opt ${show&&o.label===q.answer?'correct':''} ${show&&sel===o.label&&sel!==q.answer?'wrong':''}"><input type="radio" name="${q.id}" value="${o.label}" ${sel===o.label?'checked':''} ${state.submitted?'disabled':''}><b>${o.label}.</b><span>${mathSafe(o.text)}</span></label>`).join('')}</div>${state.mode==='practice'&&!state.submitted?`<div class="actions"><button class="btn" data-check="${q.id}">Kiểm tra</button></div>`:''}${show?`<div class="feedback ${sel===q.answer?'good':'bad'}">${sel===q.answer?'✓ Chính xác':'✗ Chưa đúng'} · Đáp án <b>${mathSafe(q.answer)}</b></div>${note(q)}`:''}</article>`}
 function ehtml(q){const show=state.submitted||state['s_'+q.id];return `<article class="q" id="${q.id}"><div class="qtop"><b>Bài ${q.number}</b><span class="tag">${q.type_id}</span></div><div class="prompt">${mathSafe(q.prompt)}</div><textarea data-essay="${q.id}" placeholder="Nhập các bước làm hoặc đáp án...">${state.essay[q.id]||''}</textarea><div class="actions"><button class="btn" data-sol="${q.id}">${show?'Ẩn':'Xem'} lời giải</button></div>${show?`<div class="feedback good"><b>Kết quả tham khảo:</b> ${mathSafe(q.answer)}</div>${note(q)}`:''}</article>`}
