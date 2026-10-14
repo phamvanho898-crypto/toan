@@ -391,6 +391,77 @@ function th05TheoryDiagram(){
     </svg>
   </div>`;
 }
+function th04TheoryDiagram(){
+  return `<div class="diagram" style="margin-top:14px">
+    <svg viewBox="0 0 760 430" aria-label="Biểu diễn giao và hợp hai khoảng trên trục số">
+      <rect width="760" height="430" fill="#fff"/>
+      <style>
+        .axis{stroke:#222;stroke-width:2}
+        .tick{stroke:#555;stroke-width:1.5}
+        .lbl{font:16px Arial,sans-serif;fill:#222}
+        .row{font:700 18px Arial,sans-serif;fill:#222}
+        .a{stroke:#f58220;stroke-width:8;stroke-linecap:round}
+        .b{stroke:#1faa81;stroke-width:8;stroke-linecap:round}
+        .i{stroke:#1d91a8;stroke-width:8;stroke-linecap:round}
+        .u{stroke:#c85e00;stroke-width:8;stroke-linecap:round}
+      </style>
+      <g transform="translate(0,0)">
+        <text x="30" y="72" class="row">A</text>
+        <line x1="120" y1="65" x2="700" y2="65" class="axis"/>
+        <line x1="192" y1="57" x2="192" y2="73" class="tick"/><text x="182" y="95" class="lbl">-1</text>
+        <line x1="410" y1="57" x2="410" y2="73" class="tick"/><text x="405" y="95" class="lbl">2</text>
+        <line x1="483" y1="57" x2="483" y2="73" class="tick"/><text x="478" y="95" class="lbl">3</text>
+        <line x1="628" y1="57" x2="628" y2="73" class="tick"/><text x="623" y="95" class="lbl">5</text>
+        <line x1="192" y1="65" x2="483" y2="65" class="a"/>
+        <circle cx="192" cy="65" r="9" fill="#fff" stroke="#f58220" stroke-width="3"/>
+        <circle cx="483" cy="65" r="9" fill="#f58220" stroke="#f58220" stroke-width="3"/>
+        <text x="535" y="55" class="lbl">A = (-1;3]</text>
+      </g>
+
+      <g transform="translate(0,95)">
+        <text x="30" y="72" class="row">B</text>
+        <line x1="120" y1="65" x2="700" y2="65" class="axis"/>
+        <line x1="192" y1="57" x2="192" y2="73" class="tick"/><text x="182" y="95" class="lbl">-1</text>
+        <line x1="410" y1="57" x2="410" y2="73" class="tick"/><text x="405" y="95" class="lbl">2</text>
+        <line x1="483" y1="57" x2="483" y2="73" class="tick"/><text x="478" y="95" class="lbl">3</text>
+        <line x1="628" y1="57" x2="628" y2="73" class="tick"/><text x="623" y="95" class="lbl">5</text>
+        <line x1="410" y1="65" x2="628" y2="65" class="b"/>
+        <circle cx="410" cy="65" r="9" fill="#1faa81" stroke="#1faa81" stroke-width="3"/>
+        <circle cx="628" cy="65" r="9" fill="#fff" stroke="#1faa81" stroke-width="3"/>
+        <text x="535" y="55" class="lbl">B = [2;5)</text>
+      </g>
+
+      <g transform="translate(0,190)">
+        <text x="15" y="72" class="row">A ∩ B</text>
+        <line x1="120" y1="65" x2="700" y2="65" class="axis"/>
+        <line x1="192" y1="57" x2="192" y2="73" class="tick"/><text x="182" y="95" class="lbl">-1</text>
+        <line x1="410" y1="57" x2="410" y2="73" class="tick"/><text x="405" y="95" class="lbl">2</text>
+        <line x1="483" y1="57" x2="483" y2="73" class="tick"/><text x="478" y="95" class="lbl">3</text>
+        <line x1="628" y1="57" x2="628" y2="73" class="tick"/><text x="623" y="95" class="lbl">5</text>
+        <line x1="410" y1="65" x2="483" y2="65" class="i"/>
+        <circle cx="410" cy="65" r="9" fill="#1d91a8" stroke="#1d91a8" stroke-width="3"/>
+        <circle cx="483" cy="65" r="9" fill="#1d91a8" stroke="#1d91a8" stroke-width="3"/>
+        <text x="535" y="55" class="lbl">[2;3]</text>
+      </g>
+
+      <g transform="translate(0,285)">
+        <text x="15" y="72" class="row">A ∪ B</text>
+        <line x1="120" y1="65" x2="700" y2="65" class="axis"/>
+        <line x1="192" y1="57" x2="192" y2="73" class="tick"/><text x="182" y="95" class="lbl">-1</text>
+        <line x1="410" y1="57" x2="410" y2="73" class="tick"/><text x="405" y="95" class="lbl">2</text>
+        <line x1="483" y1="57" x2="483" y2="73" class="tick"/><text x="478" y="95" class="lbl">3</text>
+        <line x1="628" y1="57" x2="628" y2="73" class="tick"/><text x="623" y="95" class="lbl">5</text>
+        <line x1="192" y1="65" x2="628" y2="65" class="u"/>
+        <circle cx="192" cy="65" r="9" fill="#fff" stroke="#c85e00" stroke-width="3"/>
+        <circle cx="628" cy="65" r="9" fill="#fff" stroke="#c85e00" stroke-width="3"/>
+        <text x="535" y="55" class="lbl">(-1;5)</text>
+      </g>
+    </svg>
+    <div style="font-size:14px;color:#667085;margin-top:8px">
+      Chấm rỗng: không lấy đầu mút. Chấm đặc: có lấy đầu mút.
+    </div>
+  </div>`;
+}
 function theoryExample(typeId){
   if(typeId==='QHTT01') return `
     <section style="margin-top:20px;padding:18px;border:2px solid #f58220;background:#fffaf5;border-radius:16px">
@@ -448,6 +519,35 @@ function theoryExample(typeId){
       ${bpt05Diagram('D1-TL-3')}
 
       <p><b>Kết luận:</b> Miền nghiệm là nửa mặt phẳng chứa O và không kể đường thẳng \\(2x+y=6\\).</p>
+    </section>`;
+
+  if(typeId==='TH04') return `
+    <section style="margin-top:20px;padding:18px;border:2px solid #f58220;background:#fffaf5;border-radius:16px">
+      <div class="tag">BÀI TẬP MẪU</div>
+      <h3 style="margin:12px 0 8px">Ví dụ · Giao, hợp các khoảng trên trục số</h3>
+      <p>Cho:</p>
+      <p>\\[A=(-1;3],\\qquad B=[2;5)\\]</p>
+      <p>Tìm \\(A\\cap B\\) và \\(A\\cup B\\).</p>
+
+      ${th04TheoryDiagram()}
+
+      <h4>1. Biểu diễn từng khoảng</h4>
+      <p>\\(A=(-1;3]\\): không lấy \\(-1\\), có lấy \\(3\\).</p>
+      <p>\\(B=[2;5)\\): có lấy \\(2\\), không lấy \\(5\\).</p>
+
+      <h4>2. Tìm giao</h4>
+      <p>Giao là phần <b>chồng nhau</b> của hai khoảng. Phần chung chạy từ 2 đến 3 và cả hai đầu mút đều thuộc kết quả:</p>
+      <p>\\[A\\cap B=[2;3]\\]</p>
+
+      <h4>3. Tìm hợp</h4>
+      <p>Hợp là toàn bộ phần được phủ bởi ít nhất một trong hai khoảng. Hai khoảng nối liền nhau từ -1 đến 5, nhưng không lấy hai đầu -1 và 5:</p>
+      <p>\\[A\\cup B=(-1;5)\\]</p>
+
+      <h4>4. Kết luận</h4>
+      <p>\\[\\boxed{A\\cap B=[2;3]}\\]</p>
+      <p>\\[\\boxed{A\\cup B=(-1;5)}\\]</p>
+
+      <p><b>Mẹo nhớ:</b> Giao = phần chồng nhau. Hợp = toàn bộ phần được phủ.</p>
     </section>`;
 
   if(typeId==='TH05') return `
