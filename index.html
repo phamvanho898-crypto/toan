@@ -392,18 +392,87 @@ function th05TheoryDiagram(){
   </div>`;
 }
 function theoryExample(typeId){
-  const sampleIds={QHTT01:'D2-TL-4',BPT05:'D1-TL-3',TH05:'D2-TL-2'};
-  const q=findQuestion(sampleIds[typeId]);
-  if(!q)return '';
-  let extra='';
-  if(typeId==='TH05') extra=th05TheoryDiagram();
-  return `<section style="margin-top:22px;padding:18px;border:1px solid #f5bf8f;background:#fffaf5;border-radius:16px">
-    <div class="tag">BÀI TẬP MẪU</div>
-    <div class="prompt" style="margin-top:12px">${mathSafe(q.prompt)}</div>
-    ${extra}
-    <h4 style="margin-top:18px">Cách giải mẫu</h4>
-    <div>${detailedSolution(q)}</div>
-  </section>`;
+  if(typeId==='QHTT01') return `
+    <section style="margin-top:20px;padding:18px;border:2px solid #f58220;background:#fffaf5;border-radius:16px">
+      <div class="tag">BÀI TẬP MẪU</div>
+      <h3 style="margin:12px 0 8px">Ví dụ · Quy hoạch tuyến tính hai biến</h3>
+      <p>Một hộ nông dân trồng đậu và cà trên tối đa 8 ha. Mỗi ha đậu cần 20 ngày công, thu 3 triệu đồng; mỗi ha cà cần 30 ngày công, thu 4 triệu đồng. Tổng số ngày công không quá 180. Hỏi trồng mỗi loại bao nhiêu ha để thu được nhiều tiền nhất?</p>
+
+      <h4>1. Đặt ẩn</h4>
+      <p>Gọi \\(x\\) là số ha trồng đậu, \\(y\\) là số ha trồng cà. Điều kiện: \\(x\\ge0, y\\ge0\\).</p>
+
+      <h4>2. Lập hệ ràng buộc</h4>
+      <p>\\[x+y\\le8\\]</p>
+      <p>\\[20x+30y\\le180\\iff2x+3y\\le18\\]</p>
+      <p>Vậy:</p>
+      <p>\\[\\begin{cases}x+y\\le8\\\\2x+3y\\le18\\\\x\\ge0, y\\ge0\\end{cases}\\]</p>
+
+      <h4>3. Hàm mục tiêu</h4>
+      <p>\\[F=3x+4y\\]</p>
+      <p>Cần tìm giá trị lớn nhất của \\(F\\).</p>
+
+      ${qhttDiagram('D2-TL-4')}
+
+      <h4>4. Tính tại các đỉnh</h4>
+      <div style="overflow:auto"><table>
+        <thead><tr><th>Đỉnh</th><th>Tọa độ</th><th>\\(F=3x+4y\\)</th></tr></thead>
+        <tbody>
+          <tr><td>O</td><td>(0;0)</td><td>0</td></tr>
+          <tr><td>A</td><td>(8;0)</td><td>24</td></tr>
+          <tr><td>B</td><td>(6;2)</td><td><b>26</b></td></tr>
+          <tr><td>C</td><td>(0;6)</td><td>24</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4>5. Kết luận</h4>
+      <p>Giá trị lớn nhất là \\(F_{max}=26\\) tại \\((x,y)=(6,2)\\).</p>
+      <p><b>Đáp án:</b> Trồng 6 ha đậu và 2 ha cà, thu tối đa 26 triệu đồng.</p>
+    </section>`;
+
+  if(typeId==='BPT05') return `
+    <section style="margin-top:20px;padding:18px;border:2px solid #f58220;background:#fffaf5;border-radius:16px">
+      <div class="tag">BÀI TẬP MẪU</div>
+      <h3 style="margin:12px 0 8px">Ví dụ · Biểu diễn miền nghiệm</h3>
+      <p>Biểu diễn miền nghiệm của bất phương trình \\(2x+y<6\\).</p>
+
+      <h4>1. Vẽ đường biên</h4>
+      <p>Đường biên là \\(2x+y=6\\), đi qua \\(A(0;6)\\) và \\(B(3;0)\\).</p>
+
+      <h4>2. Xét kiểu đường biên</h4>
+      <p>Vì dấu là <b>&lt;</b>, đường biên không thuộc miền nghiệm nên vẽ bằng <b>nét đứt</b>.</p>
+
+      <h4>3. Thử điểm O(0;0)</h4>
+      <p>\\[2\\cdot0+0<6\\iff0<6\\]</p>
+      <p>Mệnh đề đúng nên chọn nửa mặt phẳng chứa \\(O(0;0)\\).</p>
+
+      ${bpt05Diagram('D1-TL-3')}
+
+      <p><b>Kết luận:</b> Miền nghiệm là nửa mặt phẳng chứa O và không kể đường thẳng \\(2x+y=6\\).</p>
+    </section>`;
+
+  if(typeId==='TH05') return `
+    <section style="margin-top:20px;padding:18px;border:2px solid #f58220;background:#fffaf5;border-radius:16px">
+      <div class="tag">BÀI TẬP MẪU</div>
+      <h3 style="margin:12px 0 8px">Ví dụ · Bài toán hai tập hợp</h3>
+      <p>1410 khách được phỏng vấn; 789 khách thăm động Thiên Cung, 690 khách đến đảo Titop và tất cả đã đến ít nhất một nơi. Hỏi bao nhiêu khách đến cả hai?</p>
+
+      ${th05TheoryDiagram()}
+
+      <h4>1. Đặt tập hợp</h4>
+      <p>Gọi A là tập khách thăm Thiên Cung, B là tập khách đến Titop.</p>
+      <p>\\[|A|=789,\\quad |B|=690,\\quad |A\\cup B|=1410\\]</p>
+
+      <h4>2. Công thức</h4>
+      <p>\\[|A\\cup B|=|A|+|B|-|A\\cap B|\\]</p>
+      <p>Suy ra:</p>
+      <p>\\[|A\\cap B|=|A|+|B|-|A\\cup B|\\]</p>
+
+      <h4>3. Thay số</h4>
+      <p>\\[|A\\cap B|=789+690-1410=69\\]</p>
+
+      <p><b>Kết luận:</b> Có 69 khách đã đến cả hai nơi.</p>
+    </section>`;
+  return '';
 }
 function openTheoryGroup(groupId){
   const g=theoryGroups().find(x=>x.id===groupId);
