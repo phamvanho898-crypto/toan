@@ -12,7 +12,39 @@ function qhtml(q){const sel=state.answers[q.id],show=state.submitted||(state.mod
 function ehtml(q){const show=state.submitted||state['s_'+q.id];return `<article class="q" id="${q.id}"><div class="qtop"><b>Bài ${q.number}</b><span class="tag">${q.type_id}</span></div><div class="prompt">${q.prompt}</div><textarea data-essay="${q.id}" placeholder="Nhập các bước làm hoặc đáp án...">${state.essay[q.id]||''}</textarea><div class="actions"><button class="btn" data-sol="${q.id}">${show?'Ẩn':'Xem'} lời giải</button></div>${show?`<div class="feedback good"><b>Kết quả tham khảo:</b> ${q.answer}</div>${note(q)}`:''}</article>`}
 function exam(){const e=emap()[state.exam];let corr=0;if(state.submitted)e.mcq.forEach(q=>corr+=state.answers[q.id]===q.answer);app.innerHTML=`<div class="examhead"><div><div class="muted">TOÁN 10 · GHKI</div><h1>${e.title}</h1><span class="tag">${state.mode==='practice'?'Luyện tập':'Thi thử'}</span></div><div><span id="timer" class="tag">${fmt(state.sec)}</span> <button class="btn" id="home">← Trang chủ</button></div></div>${state.submitted?`<div class="score"><div class="muted">Kết quả trắc nghiệm</div><div class="scorebig">${(corr*.25).toFixed(2).replace('.',',')} / 3,00</div><div>${corr}/12 câu đúng</div></div>`:''}<h2 class="title">Phần I · Trắc nghiệm</h2>${e.mcq.map(qhtml).join('')}<h2 class="title">Phần II · Tự luận</h2>${e.essay.map(ehtml).join('')}<div class="actions"><button class="btn primary" id="submit">Nộp bài trắc nghiệm</button></div>`;document.querySelectorAll('input[type=radio]').forEach(r=>r.onchange=()=>state.answers[r.name]=r.value);document.querySelectorAll('[data-check]').forEach(b=>b.onclick=()=>{if(!state.answers[b.dataset.check])return alert('Hãy chọn đáp án.');state['c_'+b.dataset.check]=1;exam();typeset();by(b.dataset.check)?.scrollIntoView({block:'center'})});document.querySelectorAll('[data-essay]').forEach(t=>t.oninput=()=>state.essay[t.dataset.essay]=t.value);document.querySelectorAll('[data-sol]').forEach(b=>b.onclick=()=>{state['s_'+b.dataset.sol]=!state['s_'+b.dataset.sol];exam();typeset()});by('submit').onclick=submit;by('home').onclick=()=>{stop();state.view='home';state.exam=null;setnav('home');render()}}
 function submit(){const e=emap()[state.exam];if(Object.keys(state.answers).length<12&&!confirm('Bạn chưa trả lời đủ 12 câu. Vẫn nộp?'))return;state.submitted=true;let correct=0;e.mcq.forEach(q=>correct+=state.answers[q.id]===q.answer);const s=store();s.attempts.push({examId:e.id,correct,seconds:state.sec,at:Date.now()});save(s);exam();typeset();scrollTo({top:0,behavior:'smooth'})}
-function types(){const all=DATA.exams.flatMap(e=>[...e.mcq,...e.essay].map(q=>({...q,examId:e.id,examTitle:e.title})));app.innerHTML=`<h1>Ôn theo dạng bài</h1><section class="grid">${DATA.types.map(t=>`<article class="card"><span class="tag">${t.type_id}</span><h3>${t.title}</h3><p>${t.core}</p><button class="btn" data-type="${t.type_id}">Xem dạng</button></article>`).join('')}</section><div id="detail"></div>`;document.querySelectorAll('[data-type]').forEach(b=>b.onclick=()=>{const t=tmap()[b.dataset.type],qs=all.filter(q=>q.type_id===t.type_id);by('detail').innerHTML=`<section class="panel"><h2>${t.type_id} · ${t.title}</h2><p>${t.recognition}</p><ol>${t.steps.map(x=>`<li>${x}</li>`).join('')}</ol><h4>Câu/bài trong 3 đề</h4><div class="actions">${qs.map(q=>`<button class="btn" data-open="${q.examId}|${q.id}">${q.examTitle} · ${q.kind==='mcq'?'Câu':'Bài'} ${q.number}</button>`).join('')}</div></section>`;document.querySelectorAll('[data-open]').forEach(x=>x.onclick=()=>{const [id,qid]=x.dataset.open.split('|');start(id,'practice');setTimeout(()=>by(qid)?.scrollIntoView({behavior:'smooth'}),100)});typeset()})}
+function types(){
+  const all=DATA.exams.flatMap(e=>[...e.mcq,...e.essay].map(q=>({...q,examId:e.id,examTitle:e.title})));
+  app.innerHTML=`<h1>Ôn theo dạng bài</h1><p class="muted">Bấm “Xem dạng” để mở ngay kiến thức, cách giải và các câu luyện tương ứng.</p><section class="grid">${DATA.types.map(t=>`<article class="card"><span class="tag">${t.type_id}</span><h3>${t.title}</h3><p>${t.core}</p><button class="btn" data-type="${t.type_id}">Xem dạng</button></article>`).join('')}</section>`;
+  document.querySelectorAll('[data-type]').forEach(b=>b.onclick=()=>{
+    const t=tmap()[b.dataset.type],qs=all.filter(q=>q.type_id===t.type_id);
+    document.getElementById('typeModal')?.remove();
+    const modal=document.createElement('div');
+    modal.id='typeModal';
+    modal.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(15,23,42,.58);display:flex;align-items:center;justify-content:center;padding:18px';
+    modal.innerHTML=`<section class="panel" style="width:min(820px,96vw);max-height:88vh;overflow:auto;box-shadow:0 24px 70px rgba(15,23,42,.28);padding:22px">
+      <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start">
+        <div><span class="tag">${t.type_id}</span><h2 style="margin:10px 0 6px">${t.title}</h2></div>
+        <button class="btn" id="closeType" aria-label="Đóng">Đóng ✕</button>
+      </div>
+      <h4>Nhận diện dạng bài</h4><p>${t.recognition}</p>
+      <h4>Kiến thức cần nhớ</h4><p>${t.core}</p>
+      <h4>Cách giải</h4><ol>${t.steps.map(x=>`<li>${x}</li>`).join('')}</ol>
+      <h4>Lỗi dễ sai</h4><ul>${t.pitfalls.map(x=>`<li>${x}</li>`).join('')}</ul>
+      <h4>Luyện ngay trong 3 đề</h4>
+      <div class="actions">${qs.map(q=>`<button class="btn primary" data-open="${q.examId}|${q.id}">${q.examTitle} · ${q.kind==='mcq'?'Câu':'Bài'} ${q.number}</button>`).join('')}</div>
+    </section>`;
+    document.body.appendChild(modal);
+    by('closeType').onclick=()=>modal.remove();
+    modal.addEventListener('click',ev=>{if(ev.target===modal)modal.remove()});
+    document.querySelectorAll('#typeModal [data-open]').forEach(x=>x.onclick=()=>{
+      const [id,qid]=x.dataset.open.split('|');
+      modal.remove();
+      start(id,'practice');
+      setTimeout(()=>by(qid)?.scrollIntoView({behavior:'smooth',block:'center'}),120);
+    });
+    typeset();
+  });
+}
 function results(){const a=store().attempts;if(!a.length){app.innerHTML='<h1>Kết quả học tập</h1><div class="panel">Chưa có lần nộp bài nào.</div>';return}app.innerHTML=`<h1>Kết quả học tập</h1><table><thead><tr><th>Đề</th><th>Tốt nhất</th><th>Điểm TN</th><th>Thời gian</th></tr></thead><tbody>${DATA.exams.map(e=>{const b=a.filter(x=>x.examId===e.id).sort((x,y)=>y.correct-x.correct)[0];return `<tr><td>${e.title}</td><td>${b?b.correct+'/12':'Chưa làm'}</td><td>${b?(b.correct*.25).toFixed(2)+'/3,00':'—'}</td><td>${b?fmt(b.seconds):'—'}</td></tr>`}).join('')}</tbody></table>`}
 unpack().then(d=>{DATA=d;render()}).catch(e=>app.innerHTML='<div class="panel">Không tải được dữ liệu. Hãy dùng trình duyệt Chrome/Edge mới nhất.</div>');
 </script></body></html>
