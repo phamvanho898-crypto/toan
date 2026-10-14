@@ -481,6 +481,7 @@ function types(){
       <h4>Kiến thức cần nhớ</h4><p>${mathSafe(t.core)}</p>
       <h4>Cách giải</h4><ol>${t.steps.map(x=>`<li>${x}</li>`).join('')}</ol>
       <h4>Lỗi dễ sai</h4><ul>${t.pitfalls.map(x=>`<li>${x}</li>`).join('')}</ul>
+      ${theoryExample(t.type_id)}
       <h4>Luyện ngay trong 3 đề</h4>
       <div class="actions">${qs.map(q=>`<button class="btn primary" data-open="${q.examId}|${q.id}">${q.examTitle} · ${q.kind==='mcq'?'Câu':'Bài'} ${q.number}</button>`).join('')}</div>
     </section>`;
