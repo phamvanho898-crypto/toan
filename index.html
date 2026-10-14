@@ -368,6 +368,43 @@ function theoryGroups(){
     {id:'luong-giac',title:'Lượng giác',desc:'Góc đặc biệt, góc bù nhau và biểu thức theo tan α.',ids:['LG01','LG02','LG03']}
   ];
 }
+function findQuestion(id){
+  for(const e of DATA.exams){
+    const q=[...e.mcq,...e.essay].find(x=>x.id===id);
+    if(q)return q;
+  }
+  return null;
+}
+function th05TheoryDiagram(){
+  return `<div class="diagram" style="margin-top:14px">
+    <svg viewBox="0 0 640 330" aria-label="Sơ đồ hai tập hợp khách tham quan">
+      <rect width="640" height="330" fill="#fff"/>
+      <circle cx="265" cy="165" r="105" fill="#fff0e2" stroke="#f58220" stroke-width="4"/>
+      <circle cx="385" cy="165" r="105" fill="#eaf7f4" stroke="#1faa81" stroke-width="4"/>
+      <text x="205" y="78" font-size="22" font-weight="700" fill="#a94d00">A: Thiên Cung</text>
+      <text x="370" y="78" font-size="22" font-weight="700" fill="#0d6f59">B: Titop</text>
+      <text x="195" y="165" font-size="21">789 khách</text>
+      <text x="397" y="165" font-size="21">690 khách</text>
+      <text x="286" y="178" font-size="19" font-weight="700">A ∩ B</text>
+      <text x="268" y="205" font-size="19">69 khách</text>
+      <text x="210" y="300" font-size="19" fill="#555">A ∪ B = 1410 khách</text>
+    </svg>
+  </div>`;
+}
+function theoryExample(typeId){
+  const sampleIds={QHTT01:'D2-TL-4',BPT05:'D1-TL-3',TH05:'D2-TL-2'};
+  const q=findQuestion(sampleIds[typeId]);
+  if(!q)return '';
+  let extra='';
+  if(typeId==='TH05') extra=th05TheoryDiagram();
+  return `<section style="margin-top:22px;padding:18px;border:1px solid #f5bf8f;background:#fffaf5;border-radius:16px">
+    <div class="tag">BÀI TẬP MẪU</div>
+    <div class="prompt" style="margin-top:12px">${mathSafe(q.prompt)}</div>
+    ${extra}
+    <h4 style="margin-top:18px">Cách giải mẫu</h4>
+    <div>${detailedSolution(q)}</div>
+  </section>`;
+}
 function openTheoryGroup(groupId){
   const g=theoryGroups().find(x=>x.id===groupId);
   if(!g)return;
@@ -392,6 +429,7 @@ function openTheoryGroup(groupId){
         <ol>${t.steps.map(x=>`<li>${mathSafe(x)}</li>`).join('')}</ol>
         <h4>Lỗi dễ sai</h4>
         <ul>${t.pitfalls.map(x=>`<li>${mathSafe(x)}</li>`).join('')}</ul>
+        ${theoryExample(t.type_id)}
       </article>`;
     }).join('')}
   </section>`;
