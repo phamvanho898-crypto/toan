@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Ôn tập giữa học kỳ I Toán 10 - làm đề, xem dạng bài, lời giải và kết quả ngay trên web.">
+  <title>Ôn tập Toán 10 - Giữa HKI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    window.MathJax = {
+      tex: {inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']]},
+      svg: {fontCache:'global'}
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script src="data/data.js"></script>
+  <script defer src="js/app.js"></script>
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">TOÁN 10 · GIỮA HKI</div>
+      <nav class="nav">
+        <button data-nav="home" class="active">Trang chủ</button>
+        <button data-nav="types">Ôn theo dạng</button>
+        <button data-nav="results">Kết quả</button>
+      </nav>
+    </div>
+  </header>
+  <main class="main" id="app"></main>
+</div>
+</body>
+</html>
