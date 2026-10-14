@@ -59,7 +59,56 @@ function detailedSolution(q){
 }
 function tmap(){return Object.fromEntries(DATA.types.map(x=>[x.type_id,x]))}function emap(){return Object.fromEntries(DATA.exams.map(x=>[x.id,x]))}function setnav(v){document.querySelectorAll('[data-nav]').forEach(b=>b.classList.toggle('active',b.dataset.nav===v))}document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{stop();state.view=b.dataset.nav;state.exam=null;setnav(state.view);render()});
 function render(){if(state.view==='home')home();else if(state.view==='exam')exam();else if(state.view==='types')types();else results();typeset()}function best(id){return store().attempts.filter(a=>a.examId===id).sort((a,b)=>b.correct-a.correct)[0]}
-function home(){app.innerHTML=`<section class="hero"><h1>Ôn tập giữa học kỳ I<br>Toán 10</h1><p>Một website chung cho 3 đề: làm bài, chấm trắc nghiệm, xem dạng bài, lời giải và lưu kết quả trên thiết bị.</p><div class="stats"><span class="stat">3 đề</span><span class="stat">36 câu trắc nghiệm</span><span class="stat">15 bài tự luận</span><span class="stat">16 dạng bài</span></div></section><h2 class="title">Chọn đề</h2><section class="grid">${DATA.exams.map(e=>{const b=best(e.id);return `<article class="card"><div class="muted">TOÁN 10 · ${e.year}</div><h3>${e.title}</h3><div class="muted">12 trắc nghiệm · 5 tự luận</div><div class="actions"><button class="btn primary" data-start="${e.id}" data-mode="practice">Luyện tập</button><button class="btn" data-start="${e.id}" data-mode="exam">Thi thử</button></div>${b?`<p class="muted">Tốt nhất: ${b.correct}/12</p>`:''}</article>`}).join('')}</section>`;document.querySelectorAll('[data-start]').forEach(b=>b.onclick=()=>start(b.dataset.start,b.dataset.mode))}
+function theoryGroups(){
+  return [
+    {id:'menh-de',title:'Mệnh đề',desc:'Nhận biết mệnh đề và phủ định mệnh đề có lượng từ.',ids:['MD01','MD02']},
+    {id:'tap-hop',title:'Tập hợp',desc:'Tập hợp, giao, hợp, hiệu, khoảng và bài toán hai tập hợp.',ids:['TH01','TH02','TH03','TH04','TH05']},
+    {id:'bat-phuong-trinh',title:'Bất phương trình hai ẩn',desc:'Nhận biết, thử nghiệm, miền nghiệm và quy hoạch tuyến tính.',ids:['BPT01','BPT02','BPT03','BPT04','BPT05','QHTT01']},
+    {id:'luong-giac',title:'Lượng giác',desc:'Góc đặc biệt, góc bù nhau và biểu thức theo tan α.',ids:['LG01','LG02','LG03']}
+  ];
+}
+function openTheoryGroup(groupId){
+  const g=theoryGroups().find(x=>x.id===groupId);
+  if(!g)return;
+  const tm=tmap();
+  document.getElementById('theoryModal')?.remove();
+  const modal=document.createElement('div');
+  modal.id='theoryModal';
+  modal.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(15,23,42,.58);display:flex;align-items:center;justify-content:center;padding:18px';
+  modal.innerHTML=`<section class="panel" style="width:min(900px,96vw);max-height:90vh;overflow:auto;box-shadow:0 24px 70px rgba(15,23,42,.28);padding:22px">
+    <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start">
+      <div><span class="tag">LÝ THUYẾT</span><h2 style="margin:10px 0 6px">${g.title}</h2><p class="muted">${g.desc}</p></div>
+      <button class="btn" id="closeTheory">Đóng ✕</button>
+    </div>
+    ${g.ids.map(id=>{
+      const t=tm[id];
+      return `<article style="padding:16px 0;border-top:1px solid var(--line)">
+        <div class="tag">${t.type_id}</div>
+        <h3 style="margin:10px 0 6px">${t.title}</h3>
+        <p><b>Kiến thức cần nhớ:</b> ${mathSafe(t.core)}</p>
+        <p><b>Nhận diện:</b> ${mathSafe(t.recognition)}</p>
+        <h4>Cách làm</h4>
+        <ol>${t.steps.map(x=>`<li>${mathSafe(x)}</li>`).join('')}</ol>
+        <h4>Lỗi dễ sai</h4>
+        <ul>${t.pitfalls.map(x=>`<li>${mathSafe(x)}</li>`).join('')}</ul>
+      </article>`;
+    }).join('')}
+  </section>`;
+  document.body.appendChild(modal);
+  by('closeTheory').onclick=()=>modal.remove();
+  modal.addEventListener('click',e=>{if(e.target===modal)modal.remove()});
+  typeset();
+}
+function home(){
+  app.innerHTML=`<section class="hero"><h1>Ôn tập giữa học kỳ I<br>Toán 10</h1><p>Một website chung cho 3 đề: làm bài, chấm trắc nghiệm, xem dạng bài, lời giải và lưu kết quả trên thiết bị.</p><div class="stats"><span class="stat">3 đề</span><span class="stat">36 câu trắc nghiệm</span><span class="stat">15 bài tự luận</span><span class="stat">16 dạng bài</span></div></section>
+  <h2 class="title">Chọn đề</h2>
+  <section class="grid">${DATA.exams.map(e=>{const b=best(e.id);return `<article class="card"><div class="muted">TOÁN 10 · ${e.year}</div><h3>${e.title}</h3><div class="muted">12 trắc nghiệm · 5 tự luận</div><div class="actions"><button class="btn primary" data-start="${e.id}" data-mode="practice">Luyện tập</button><button class="btn" data-start="${e.id}" data-mode="exam">Thi thử</button></div>${b?`<p class="muted">Tốt nhất: ${b.correct}/12</p>`:''}</article>`}).join('')}</section>
+  <h2 class="title">Lý thuyết cần nhớ</h2>
+  <p class="muted">Ôn nhanh kiến thức cốt lõi trước khi làm đề.</p>
+  <section class="grid">${theoryGroups().map(g=>`<article class="card"><span class="tag">LÝ THUYẾT</span><h3>${g.title}</h3><p>${g.desc}</p><div class="actions"><button class="btn primary" data-theory="${g.id}">Xem lý thuyết</button></div></article>`).join('')}</section>`;
+  document.querySelectorAll('[data-start]').forEach(b=>b.onclick=()=>start(b.dataset.start,b.dataset.mode));
+  document.querySelectorAll('[data-theory]').forEach(b=>b.onclick=()=>openTheoryGroup(b.dataset.theory));
+}
 function start(id,mode){stop();state={view:'exam',exam:id,mode,answers:{},essay:{},submitted:false,sec:0,timer:null};setnav('');render();state.timer=setInterval(()=>{state.sec++;const e=by('timer');if(e)e.textContent=fmt(state.sec)},1000)}function fmt(s){return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`}function stop(){if(state.timer)clearInterval(state.timer);state.timer=null}
 function diagram(id){if(!id)return'';if(id==='d3q6')return `<div class="diagram"><svg viewBox="0 0 520 300"><ellipse cx="260" cy="150" rx="185" ry="115" fill="#bfe7f2" stroke="#176b87" stroke-width="4"/><ellipse cx="285" cy="160" rx="82" ry="67" fill="#fff" stroke="#344054" stroke-width="4"/><text x="155" y="120" font-size="34">S</text><text x="270" y="170" font-size="34">T</text></svg></div>`;return `<div class="diagram"><svg viewBox="0 0 520 300"><line x1="45" y1="250" x2="490" y2="250" stroke="#222" stroke-width="3"/><line x1="110" y1="280" x2="110" y2="30" stroke="#222" stroke-width="3"/><line x1="100" y1="70" x2="430" y2="250" stroke="#176b87" stroke-width="4"/><text x="285" y="65" fill="#176b87" font-size="18">Đường biên và miền nghiệm</text></svg></div>`}
 function note(q){const t=tmap()[q.type_id];return `<details open><summary>${t.type_id} · ${t.title}</summary><div class="detail"><h4>Kiến thức cần nhớ</h4><div>${mathSafe(t.core)}</div><h4>Cách giải</h4><ol>${t.steps.map(x=>`<li>${x}</li>`).join('')}</ol><h4>Lỗi dễ sai</h4><ul>${t.pitfalls.map(x=>`<li>${x}</li>`).join('')}</ul><h4>Lời giải câu này</h4><div>${detailedSolution(q)}</div>${q.source_issue?`<p><b>Ghi chú nguồn:</b> ${q.source_issue}</p>`:''}</div></details>`}
