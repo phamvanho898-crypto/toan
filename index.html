@@ -9,6 +9,73 @@ function mathSafe(s){
     return '\\('+safe+'\\)';
   });
 }
+function qhttDiagram(id){
+  const box=(title,body)=>`<div style="margin:18px 0"><h4 style="margin:0 0 10px">${title}</h4><div class="diagram">${body}</div></div>`;
+  if(id==='D1-TL-4') return box('Hình miền nghiệm',`
+    <svg viewBox="0 0 640 420" aria-label="Miền nghiệm bài toán thịt bò và thịt lợn">
+      <rect width="640" height="420" fill="#fff"/>
+      <polygon points="201.9,69.1 567.5,69.1 567.5,287.3 275,156.4" fill="#fff0e2" stroke="#f58220" stroke-width="3"/>
+      <line x1="80" y1="360" x2="610" y2="360" stroke="#222" stroke-width="2.5"/>
+      <line x1="80" y1="375" x2="80" y2="35" stroke="#222" stroke-width="2.5"/>
+      <line x1="177.5" y1="40" x2="445.6" y2="360" stroke="#1d91a8" stroke-width="3"/>
+      <line x1="80" y1="69.1" x2="600" y2="301.8" stroke="#1faa81" stroke-width="3"/>
+      <line x1="567.5" y1="45" x2="567.5" y2="360" stroke="#999" stroke-width="2" stroke-dasharray="7 6"/>
+      <line x1="80" y1="69.1" x2="600" y2="69.1" stroke="#999" stroke-width="2" stroke-dasharray="7 6"/>
+      <g fill="#f58220" stroke="#fff" stroke-width="2">
+        <circle cx="201.9" cy="69.1" r="7"/><circle cx="567.5" cy="69.1" r="7"/>
+        <circle cx="567.5" cy="287.3" r="7"/><circle cx="275" cy="156.4" r="7"/>
+      </g>
+      <g font-size="16" font-family="Arial,sans-serif" fill="#222">
+        <text x="187" y="58">A(0,375;1)</text><text x="510" y="58">B(1,5;1)</text>
+        <text x="503" y="310">C(1,5;0,25)</text><text x="282" y="150">D(0,6;0,7)</text>
+        <text x="380" y="118" fill="#1d91a8">4x + 3y = 4,5</text>
+        <text x="360" y="255" fill="#138a68">x + 2y = 2</text>
+        <text x="585" y="385">x (kg bò)</text><text x="18" y="48">y (kg lợn)</text>
+        <text x="345" y="95" fill="#c85e00" font-weight="700">Miền nghiệm</text>
+      </g>
+    </svg>`);
+  if(id==='D2-TL-4') return box('Hình miền nghiệm',`
+    <svg viewBox="0 0 640 420" aria-label="Miền nghiệm bài toán trồng đậu và cà">
+      <rect width="640" height="420" fill="#fff"/>
+      <polygon points="80,360 569.4,360 447.1,261.5 80,64.6" fill="#fff0e2" stroke="#f58220" stroke-width="3"/>
+      <line x1="80" y1="360" x2="610" y2="360" stroke="#222" stroke-width="2.5"/>
+      <line x1="80" y1="375" x2="80" y2="35" stroke="#222" stroke-width="2.5"/>
+      <line x1="171.8" y1="40" x2="569.4" y2="360" stroke="#1d91a8" stroke-width="3"/>
+      <line x1="80" y1="64.6" x2="600" y2="344.6" stroke="#1faa81" stroke-width="3"/>
+      <g fill="#f58220" stroke="#fff" stroke-width="2">
+        <circle cx="80" cy="360" r="7"/><circle cx="569.4" cy="360" r="7"/>
+        <circle cx="447.1" cy="261.5" r="9"/><circle cx="80" cy="64.6" r="7"/>
+      </g>
+      <g font-size="16" font-family="Arial,sans-serif" fill="#222">
+        <text x="92" y="350">O(0;0)</text><text x="520" y="350">A(8;0)</text>
+        <text x="454" y="253" fill="#c85e00" font-weight="700">B(6;2) tối ưu</text>
+        <text x="91" y="58">C(0;6)</text>
+        <text x="435" y="125" fill="#1d91a8">x + y = 8</text>
+        <text x="255" y="105" fill="#138a68">2x + 3y = 18</text>
+        <text x="570" y="390">x (ha đậu)</text><text x="18" y="48">y (ha cà)</text>
+      </g>
+    </svg>`);
+  if(id==='D3-TL-4') return box('Hình miền nghiệm',`
+    <svg viewBox="0 0 640 420" aria-label="Miền nghiệm bài toán thiệp nhỏ và thiệp lớn">
+      <rect width="640" height="420" fill="#fff"/>
+      <polygon points="482.6,360 583.2,360 281.3,177.1" fill="#fff0e2" stroke="#f58220" stroke-width="3"/>
+      <line x1="80" y1="360" x2="610" y2="360" stroke="#222" stroke-width="2.5"/>
+      <line x1="80" y1="375" x2="80" y2="35" stroke="#222" stroke-width="2.5"/>
+      <line x1="130.3" y1="40" x2="482.6" y2="360" stroke="#1d91a8" stroke-width="3"/>
+      <line x1="80" y1="55.2" x2="583.2" y2="360" stroke="#1faa81" stroke-width="3"/>
+      <g fill="#f58220" stroke="#fff" stroke-width="2">
+        <circle cx="482.6" cy="360" r="7"/><circle cx="583.2" cy="360" r="7"/><circle cx="281.3" cy="177.1" r="9"/>
+      </g>
+      <g font-size="16" font-family="Arial,sans-serif" fill="#222">
+        <text x="430" y="350">A(12;0)</text><text x="542" y="350">B(15;0)</text>
+        <text x="288" y="168" fill="#c85e00" font-weight="700">C(6;6) tối ưu</text>
+        <text x="180" y="95" fill="#1d91a8">x + y = 12</text>
+        <text x="390" y="105" fill="#138a68">2x + 3y = 30</text>
+        <text x="555" y="390">x (thiệp nhỏ)</text><text x="8" y="48">y (thiệp lớn)</text>
+      </g>
+    </svg>`);
+  return '';
+}
 function detailedSolution(q){
   if(q.id==='D1-TL-2') return `
     <p><b>Bước 1 · Đặt tập hợp</b></p>
@@ -55,6 +122,119 @@ function detailedSolution(q){
     <p>Suy ra:</p>
     <p>\\[|A\\cap B|=24+15-36=3\\]</p>
     <p><b>Kết luận:</b> Có <b>3 người</b> thích cả tập thể thao và đi câu cá.</p>`;
+  if(q.id==='D1-TL-4') return `
+    <p><b>Bước 1 · Đặt ẩn</b></p>
+    <p>Gọi \\(x\\) là số kg thịt bò và \\(y\\) là số kg thịt lợn mua trong một ngày.</p>
+    <p>Điều kiện: \\(0\\le x\\le1,5\\), \\(0\\le y\\le1\\).</p>
+
+    <p><b>Bước 2 · Lập hệ ràng buộc</b></p>
+    <p>Điều kiện protein:</p>
+    <p>\\[800x+600y\\ge900\\]</p>
+    <p>Điều kiện lipit:</p>
+    <p>\\[200x+400y\\ge400\\]</p>
+    <p>Rút gọn hai bất phương trình:</p>
+    <p>\\[\\begin{cases}4x+3y\\ge4,5\\\\x+2y\\ge2\\\\0\\le x\\le1,5\\\\0\\le y\\le1\\end{cases}\\]</p>
+
+    <p><b>Bước 3 · Lập hàm mục tiêu</b></p>
+    <p>Chi phí tính theo nghìn đồng là:</p>
+    <p>\\[F=200x+100y\\]</p>
+    <p>Ta cần tìm <b>giá trị nhỏ nhất</b> của \\(F\\) trên miền nghiệm.</p>
+
+    ${qhttDiagram(q.id)}
+
+    <p><b>Bước 4 · Xác định các đỉnh miền nghiệm</b></p>
+    <p>Các đỉnh cần xét là \\(A(0,375;1)\\), \\(B(1,5;1)\\), \\(C(1,5;0,25)\\), \\(D(0,6;0,7)\\).</p>
+
+    <p><b>Bước 5 · Tính hàm mục tiêu tại các đỉnh</b></p>
+    <div style="overflow:auto"><table>
+      <thead><tr><th>Đỉnh</th><th>Tọa độ</th><th>\\(F=200x+100y\\)</th></tr></thead>
+      <tbody>
+        <tr><td>A</td><td>(0,375; 1)</td><td><b>175</b></td></tr>
+        <tr><td>B</td><td>(1,5; 1)</td><td>400</td></tr>
+        <tr><td>C</td><td>(1,5; 0,25)</td><td>325</td></tr>
+        <tr><td>D</td><td>(0,6; 0,7)</td><td>190</td></tr>
+      </tbody>
+    </table></div>
+
+    <p><b>Bước 6 · Kết luận</b></p>
+    <p>Giá trị nhỏ nhất là \\(F_{min}=175\\) nghìn đồng tại \\(A(0,375;1)\\).</p>
+    <p>Vậy gia đình nên mua <b>0,375 kg thịt bò và 1 kg thịt lợn</b>, chi phí nhỏ nhất là <b>175 nghìn đồng</b>.</p>`;
+
+  if(q.id==='D2-TL-4') return `
+    <p><b>Bước 1 · Đặt ẩn</b></p>
+    <p>Gọi \\(x\\) là số ha trồng đậu và \\(y\\) là số ha trồng cà.</p>
+    <p>Điều kiện: \\(x\\ge0, y\\ge0\\).</p>
+
+    <p><b>Bước 2 · Lập hệ ràng buộc</b></p>
+    <p>Diện tích tối đa 8 ha:</p>
+    <p>\\[x+y\\le8\\]</p>
+    <p>Tổng ngày công không quá 180:</p>
+    <p>\\[20x+30y\\le180\\iff2x+3y\\le18\\]</p>
+    <p>Vậy:</p>
+    <p>\\[\\begin{cases}x+y\\le8\\\\2x+3y\\le18\\\\x\\ge0,y\\ge0\\end{cases}\\]</p>
+
+    <p><b>Bước 3 · Lập hàm mục tiêu</b></p>
+    <p>Doanh thu tính theo triệu đồng:</p>
+    <p>\\[F=3x+4y\\]</p>
+    <p>Cần tìm <b>giá trị lớn nhất</b> của \\(F\\).</p>
+
+    ${qhttDiagram(q.id)}
+
+    <p><b>Bước 4 · Các đỉnh miền nghiệm</b></p>
+    <p>Miền nghiệm có các đỉnh: \\(O(0;0)\\), \\(A(8;0)\\), \\(B(6;2)\\), \\(C(0;6)\\).</p>
+
+    <p><b>Bước 5 · Tính hàm mục tiêu</b></p>
+    <div style="overflow:auto"><table>
+      <thead><tr><th>Đỉnh</th><th>Tọa độ</th><th>\\(F=3x+4y\\)</th></tr></thead>
+      <tbody>
+        <tr><td>O</td><td>(0;0)</td><td>0</td></tr>
+        <tr><td>A</td><td>(8;0)</td><td>24</td></tr>
+        <tr><td>B</td><td>(6;2)</td><td><b>26</b></td></tr>
+        <tr><td>C</td><td>(0;6)</td><td>24</td></tr>
+      </tbody>
+    </table></div>
+
+    <p><b>Bước 6 · Kết luận</b></p>
+    <p>\\(F_{max}=26\\) triệu đồng tại \\((x,y)=(6,2)\\).</p>
+    <p>Vậy nên trồng <b>6 ha đậu và 2 ha cà</b>, thu tối đa <b>26 triệu đồng</b>.</p>`;
+
+  if(q.id==='D3-TL-4') return `
+    <p><b>Bước 1 · Đặt ẩn</b></p>
+    <p>Gọi \\(x\\) là số thiệp nhỏ, \\(y\\) là số thiệp lớn.</p>
+    <p>Vì là số sản phẩm nên \\(x,y\\in\\mathbb{N}\\) và \\(x,y\\ge0\\).</p>
+
+    <p><b>Bước 2 · Lập hệ ràng buộc</b></p>
+    <p>Tổng thời gian không quá 30 giờ:</p>
+    <p>\\[2x+3y\\le30\\]</p>
+    <p>Phải làm ít nhất 12 tấm:</p>
+    <p>\\[x+y\\ge12\\]</p>
+    <p>Vậy:</p>
+    <p>\\[\\begin{cases}2x+3y\\le30\\\\x+y\\ge12\\\\x,y\\ge0\\end{cases}\\]</p>
+
+    <p><b>Bước 3 · Lập hàm mục tiêu</b></p>
+    <p>Tiền thu tính theo nghìn đồng:</p>
+    <p>\\[F=10x+20y\\]</p>
+    <p>Cần tìm <b>giá trị lớn nhất</b> của \\(F\\).</p>
+
+    ${qhttDiagram(q.id)}
+
+    <p><b>Bước 4 · Các đỉnh miền nghiệm</b></p>
+    <p>Miền nghiệm liên tục có các đỉnh \\(A(12;0)\\), \\(B(15;0)\\), \\(C(6;6)\\). Ba đỉnh này đều có tọa độ nguyên nên phù hợp điều kiện số thiệp.</p>
+
+    <p><b>Bước 5 · Tính hàm mục tiêu</b></p>
+    <div style="overflow:auto"><table>
+      <thead><tr><th>Đỉnh</th><th>Tọa độ</th><th>\\(F=10x+20y\\)</th></tr></thead>
+      <tbody>
+        <tr><td>A</td><td>(12;0)</td><td>120</td></tr>
+        <tr><td>B</td><td>(15;0)</td><td>150</td></tr>
+        <tr><td>C</td><td>(6;6)</td><td><b>180</b></td></tr>
+      </tbody>
+    </table></div>
+
+    <p><b>Bước 6 · Kết luận</b></p>
+    <p>\\(F_{max}=180\\) nghìn đồng tại \\((x,y)=(6,6)\\).</p>
+    <p>Vậy nên làm <b>6 thiệp nhỏ và 6 thiệp lớn</b>, thu tối đa <b>180 nghìn đồng</b>.</p>`;
+
   return mathSafe(q.solution);
 }
 function tmap(){return Object.fromEntries(DATA.types.map(x=>[x.type_id,x]))}function emap(){return Object.fromEntries(DATA.exams.map(x=>[x.id,x]))}function setnav(v){document.querySelectorAll('[data-nav]').forEach(b=>b.classList.toggle('active',b.dataset.nav===v))}document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{stop();state.view=b.dataset.nav;state.exam=null;setnav(state.view);render()});
