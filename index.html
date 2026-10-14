@@ -100,11 +100,19 @@ function openTheoryGroup(groupId){
   typeset();
 }
 function home(){
-  app.innerHTML=`<section class="hero"><h1>Ôn tập giữa học kỳ I<br>Toán 10</h1><p>Một website chung cho 3 đề: làm bài, chấm trắc nghiệm, xem dạng bài, lời giải và lưu kết quả trên thiết bị.</p><div class="stats"><span class="stat">3 đề</span><span class="stat">36 câu trắc nghiệm</span><span class="stat">15 bài tự luận</span><span class="stat">16 dạng bài</span></div></section>
+  app.innerHTML=`<section class="hero">
+    <h1>Ôn tập giữa học kỳ I<br>Toán 10</h1>
+    <h3 style="margin:18px 0 10px;color:#d86500">Hướng dẫn sử dụng</h3>
+    <div class="stats">
+      <span class="stat">1. Chọn đề muốn làm</span>
+      <span class="stat">2. Chọn Luyện tập hoặc Thi thử</span>
+      <span class="stat">3. Làm bài và bấm Kiểm tra / Nộp bài</span>
+      <span class="stat">4. Xem lời giải và ôn lại theo dạng bài</span>
+    </div>
+  </section>
   <h2 class="title">Chọn đề</h2>
   <section class="grid">${DATA.exams.map(e=>{const b=best(e.id);return `<article class="card"><div class="muted">TOÁN 10 · ${e.year}</div><h3>${e.title}</h3><div class="muted">12 trắc nghiệm · 5 tự luận</div><div class="actions"><button class="btn primary" data-start="${e.id}" data-mode="practice">Luyện tập</button><button class="btn" data-start="${e.id}" data-mode="exam">Thi thử</button></div>${b?`<p class="muted">Tốt nhất: ${b.correct}/12</p>`:''}</article>`}).join('')}</section>
   <h2 class="title">Lý thuyết cần nhớ</h2>
-  <p class="muted">Ôn nhanh kiến thức cốt lõi trước khi làm đề.</p>
   <section class="grid">${theoryGroups().map(g=>`<article class="card"><span class="tag">LÝ THUYẾT</span><h3>${g.title}</h3><p>${g.desc}</p><div class="actions"><button class="btn primary" data-theory="${g.id}">Xem lý thuyết</button></div></article>`).join('')}</section>`;
   document.querySelectorAll('[data-start]').forEach(b=>b.onclick=()=>start(b.dataset.start,b.dataset.mode));
   document.querySelectorAll('[data-theory]').forEach(b=>b.onclick=()=>openTheoryGroup(b.dataset.theory));
